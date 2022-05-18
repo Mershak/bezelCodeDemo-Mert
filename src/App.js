@@ -1,25 +1,41 @@
 import logo from './logo.svg';
 import './App.css';
+import PageScreen from './PageScreen';
+import ImageView from './components/ImageView';
+import ImageScroller from './components/ImageScroller';
+import {useState} from "react"
+import picList from './picList';
+import SwipeView from './components/SwipeView';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  console.log(window.outerWidth)
+  if (window.outerWidth >= 992){
+    return (
+      <div className="App">
+        <div className='Body'>
+          <ImageView 
+            path="CatGallery" 
+            name={`${picList[currentImageIndex]}`}
+          />
+        </div>
+        <ImageScroller
+          nameList={picList}
+          selectedIndex={currentImageIndex}
+          path={"CatGallery"}
+          changeIndex={setCurrentImageIndex}
+        />
+      </div>
+    );
+  }else{
+    return <div className="App">
+        <div className='Gallery'>
+          <SwipeView/>
+        </div>
+        
+      </div>
+  }
+
 }
 
 export default App;
